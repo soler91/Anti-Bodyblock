@@ -11,4 +11,7 @@ Barely tested mod.
 
 
 want to support my awful mods?
-https://www.paypal.me/soler91
+
+https://ko-fi.com/G2G372NE
+
+can't even make a proper button
