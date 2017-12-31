@@ -1,50 +1,41 @@
-const Command = require('command');
+module.exports = function antiBodyBlock(dispatch) {
+  const command = require("command")(dispatch);
+  const partyMembers = new Set();
+  const cache = Object.create(null);
+  const partyObj = Object.create(null);
+  let interval = null;
+  let enabled = false;
 
-module.exports = function antibodyblock(dispatch) {
-    const command = Command(dispatch);
-    let partyMembers = [];
-    let cache = {};
-    let interval = null;
-    let enabled = false;
+  partyObj.unk4 = 1;
 
-    command.add('bb', () => {
-        enabled = !enabled;
-        if(enabled){
-            interval = setInterval(RemoveBodyBlock,5000);
-        }
-        else if(!enabled){
-            clearInterval(interval);
-        }
-        command.message("Anti-bodyblock enabled: "+enabled);
-	});
-    
-    dispatch.hook('S_PARTY_INFO', 1, event => {
-        cache = event;
-    })
-    
-    dispatch.hook('S_PARTY_MEMBER_LIST', 5, (event) => {
-        partyMembers = [];
-            for (let i in event.members) {
-                if (event.members[i].online) {
-                    partyMembers.push({
-                        cid: event.members[i].cid
-                    });
-                }
-            }
-    });
-    
-    function RemoveBodyBlock(){
-        if(partyMembers){
-            for(let i in partyMembers){
-                dispatch.toClient('S_PARTY_INFO', 1, {
-                        leader: partyMembers[i].cid,
-                        unk1: cache.unk1,
-                        unk2: cache.unk2,
-                        unk3: cache.unk3,
-                        unk4: 1
-                })
-            }
-        }
+  const removeBodyBlock = () => {
+    for (let i = partyMembers.values(), step; !(step = i.next()).done; ) {
+      partyObj.leader = step.value;
+      partyObj.unk1   = cache.unk1;
+      partyObj.unk2   = cache.unk2;
+      partyObj.unk3   = cache.unk3;
+      dispatch.toClient("S_PARTY_INFO", 1, partyObj);
     }
-    
-}
+  };
+
+  command.add("bb", () => {
+    enabled = !enabled;
+    if (enabled) {
+      interval = setInterval(removeBodyBlock, 5000);
+    }
+    else {
+      clearInterval(interval);
+    }
+    command.message("Anti-bodyblock enabled: " + enabled);
+  });
+
+  dispatch.hook("S_PARTY_INFO", 1, evt => { Object.assign(cache, evt); });
+  dispatch.hook("S_PARTY_MEMBER_LIST", 5, evt => {
+    partyMembers.clear();
+    for (let i = 0, arr = evt.members, len = arr.length; i < len; ++i) {
+      const member = arr[i];
+      if (!member.online) continue;
+      partyMembers.add(member.cid);
+    }
+  });
+};
