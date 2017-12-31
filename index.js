@@ -4,10 +4,18 @@ module.exports = function antibodyblock(dispatch) {
     const command = Command(dispatch);
     let partyMembers = [];
     let cache = {};
+    let interval = null;
+    let enabled = false;
 
     command.add('bb', () => {
-        RemoveBodyBlock();
-        command.message("work?");
+        enabled = !enabled;
+        if(enabled){
+            interval = setInterval(RemoveBodyBlock,5000);
+        }
+        else if(!enabled){
+            clearInterval(interval);
+        }
+        command.message("Anti-bodyblock enabled: "+enabled);
 	});
     
     dispatch.hook('S_PARTY_INFO', 1, event => {
