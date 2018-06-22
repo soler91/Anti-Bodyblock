@@ -4,7 +4,7 @@ module.exports = function antiBodyBlock(dispatch) {
   const cache = Object.create(null);
   const partyObj = Object.create(null);
   let interval = null;
-  let enabled = false;
+  let enabled = true;
 
   partyObj.unk4 = 1;
 
@@ -17,6 +17,12 @@ module.exports = function antiBodyBlock(dispatch) {
       dispatch.send("S_PARTY_INFO", 1, partyObj);
     }
   };
+  
+  dispatch.hook('S_LOGIN', 10, evt => {
+    if (!enabled) {
+      interval = setInterval(removeBodyBlock, 5000);
+    }
+  });
 
   command.add("bb", () => {
     enabled = !enabled;
