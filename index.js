@@ -23,7 +23,7 @@ module.exports = function antiBodyBlock(dispatch) {
   };
   
   game.on('enter_game', () => {
-    if (!enabled) {
+    if (enabled) {
       interval = setInterval(removeBodyBlock, 5000);
     }
   });
