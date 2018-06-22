@@ -1,8 +1,12 @@
+const GameState = require('tera-game-state');
+
 module.exports = function antiBodyBlock(dispatch) {
+  const game = GameState(dispatch);
   const command = require("command")(dispatch);
   const partyMembers = new Set();
   const cache = Object.create(null);
   const partyObj = Object.create(null);
+  
   let interval = null;
   let enabled = true;
 
@@ -18,7 +22,7 @@ module.exports = function antiBodyBlock(dispatch) {
     }
   };
   
-  dispatch.hook('S_LOGIN', 10, evt => {
+  game.on('enter_game', () => {
     if (!enabled) {
       interval = setInterval(removeBodyBlock, 5000);
     }
