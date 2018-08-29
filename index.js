@@ -1,8 +1,4 @@
-const GameState = require('tera-game-state');
-
-module.exports = function antiBodyBlock(dispatch) {
-  const game = GameState(dispatch);
-  const command = require("command")(dispatch);
+module.exports = function antiBodyBlock(bigmeme) {
   const partyMembers = new Set();
   const cache = Object.create(null);
   const partyObj = Object.create(null);
@@ -18,17 +14,17 @@ module.exports = function antiBodyBlock(dispatch) {
       partyObj.unk1   = cache.unk1;
       partyObj.unk2   = cache.unk2;
       partyObj.unk3   = cache.unk3;
-      dispatch.send("S_PARTY_INFO", 1, partyObj);
+      bigmeme.send("S_PARTY_INFO", 1, partyObj);
     }
   };
   
-  game.on('enter_game', () => {
+  bigmeme.game.on('enter_game', () => {
     if (enabled) {
       interval = setInterval(removeBodyBlock, 5000);
     }
   });
 
-  command.add("bb", () => {
+  bigmeme.command.add("bb", () => {
     enabled = !enabled;
     if (enabled) {
       interval = setInterval(removeBodyBlock, 5000);
@@ -36,11 +32,11 @@ module.exports = function antiBodyBlock(dispatch) {
     else {
       clearInterval(interval);
     }
-    command.message("Anti-bodyblock enabled: " + enabled);
+    bigmeme.command.message("Anti-bodyblock enabled: " + enabled);
   });
 
-  dispatch.hook("S_PARTY_INFO", 1, evt => { Object.assign(cache, evt); });
-  dispatch.hook("S_PARTY_MEMBER_LIST", 7, evt => {
+  bigmeme.hook("S_PARTY_INFO", 1, evt => { Object.assign(cache, evt); });
+  bigmeme.hook("S_PARTY_MEMBER_LIST", 7, evt => {
     partyMembers.clear();
     for (let i = 0, arr = evt.members, len = arr.length; i < len; ++i) {
       const member = arr[i];
