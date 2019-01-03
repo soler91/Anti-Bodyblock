@@ -1,6 +1,6 @@
 # Anti-Bodyblock
 
-Tired of being bodyblocked in dungeons or openworld ?
+Tired of being bodyblocked by your party members ?
 Well use this thing.
 
 ## Usage (enabled by default):
