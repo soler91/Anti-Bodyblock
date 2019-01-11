@@ -20,17 +20,17 @@ module.exports = function antiBodyBlock(bigmeme) {
   
   bigmeme.game.on('enter_game', () => {
     if (enabled) {
-      interval = setInterval(removeBodyBlock, 5000);
+      interval = bigmeme.setInterval(removeBodyBlock, 5000);
     }
   });
 
   bigmeme.command.add("bb", () => {
     enabled = !enabled;
     if (enabled) {
-      interval = setInterval(removeBodyBlock, 5000);
+      interval = bigmeme.setInterval(removeBodyBlock, 5000);
     }
     else {
-      clearInterval(interval);
+      bigmeme.clearInterval(interval);
     }
     bigmeme.command.message("Anti-bodyblock enabled: " + enabled);
   });
