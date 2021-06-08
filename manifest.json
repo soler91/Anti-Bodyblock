@@ -1,11 +1,11 @@
 {
-	"files": {
-		"index.js": "8151391D8E4ABE3DD9EBC32170CD145A7DC6E4B2A525096ED6A2C78B3BB498BD",
-		"module.json": "57DCD7EDBAF20CD0BF228513C177DA6011F35B2DF69764F969ED7CF0AF2AB253"
-	},
-	
-	"defs": {
-		"S_PARTY_MEMBER_LIST": 7,
-		"S_PARTY_INFO": 1
-	}
+    "files": {
+        "README.md": "dd9d448f8ad38a41aa96c2fd349bbf144d4cc437e017fa54038b0bcfdd697eca",
+        "index.js": "1578df97ed920e368faad6daef04fa6e7bc0dc3c821c6807c2d4aa49e02871c7",
+        "module.json": "b190c0cc0f15fcd1d684b5354fcf020f82b29941b08e2d733e9f403f4e7b3683"
+    },
+    "defs": {
+        "S_PARTY_INFO": 2,
+        "S_PARTY_MEMBER_LIST": 9
+    }
 }
